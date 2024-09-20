@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class RollTwoDice {
 
-    public static int addedValue, rollCount, countSame, lastValue = 0; //a way to define multiple field variabels with the same initial value
+    public static int addedValue, rollCount, countSame, highestValue = 0; //a way to define multiple field variabels with the same initial value
     public static int[] arr = new int[0];
 
     public static void main(String[] args) {
@@ -17,7 +17,7 @@ public class RollTwoDice {
 
         playDice();
 
-        countInstances(arr, arr.length);
+//        countInstances(arr, arr.length);
 
     }
 
@@ -69,7 +69,7 @@ public class RollTwoDice {
             for (int index = 0; index < faces.length; index++) {
                 System.out.print(faces[index] + " ");
             }
-            updateStatistics();
+            updateStatistics(faces);
 
             System.out.println();
             System.out.print("Rul en terning? ('ja/nej') ");
@@ -79,18 +79,20 @@ public class RollTwoDice {
         scanner.close();
     }
 
-    public static void updateStatistics() {
+    public static void updateStatistics(int[] roll) {
+        int[] dices = roll;
+
         updateRollcount(); //OK
-        sameValue(rollDice()); //OK
-        addedValue += addValue(rollDice()); //OK
-        setHighestValue(rollDice());
+        sameValue(dices); //OK
+        addedValue += addValue(dices); //OK
+        setHighestValue(dices); //Ish?
     }
 
     public static void printStatistics() {
         System.out.println("Du har kastet " + rollCount + " gange.");
         System.out.println("Det samlede antal øjne er " + addedValue + ".");
         System.out.println("Du har kastet ens " + countSame + " gange.");
-        System.out.println("Det højeste slag var " + lastValue + ".");
+        System.out.println("Det højeste slag var " + highestValue + ".");
 //        countInstances(arr, arr.length);
     }
 
@@ -127,11 +129,11 @@ public class RollTwoDice {
     }
 
     public static void setHighestValue(int[] roll) {
-        int currentHighest = lastValue;
+        int currentHighest = highestValue;
         int sumOfRoll = addValue(roll);
 
         if (sumOfRoll > currentHighest) {
-            lastValue = sumOfRoll;
+            highestValue = sumOfRoll;
         }
     }
 
